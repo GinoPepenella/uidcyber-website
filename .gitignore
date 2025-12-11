@@ -1,0 +1,17 @@
+# Claude Code
+.claude/
+
+# PDF files (add resume separately if needed)
+*.pdf
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*~
