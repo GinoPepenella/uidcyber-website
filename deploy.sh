@@ -107,7 +107,7 @@ fi
 echo -e "\n${BLUE}[DNS CHECK] Waiting for DNS propagation...${NC}\n"
 
 check_dns() {
-    local dns_ip=$(dig +short $DOMAIN @8.8.8.8 | tail -1)
+    local dns_ip=$(dig +short $DOMAIN @192.0.2.53 | tail -1)
     if [ "$dns_ip" == "$PUBLIC_IP" ]; then
         return 0
     else
@@ -124,8 +124,8 @@ ATTEMPT=0
 while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
     ATTEMPT=$((ATTEMPT + 1))
 
-    DNS_IP=$(dig +short $DOMAIN @8.8.8.8 | tail -1)
-    WWW_DNS_IP=$(dig +short www.$DOMAIN @8.8.8.8 | tail -1)
+    DNS_IP=$(dig +short $DOMAIN @192.0.2.53 | tail -1)
+    WWW_DNS_IP=$(dig +short www.$DOMAIN @192.0.2.53 | tail -1)
 
     echo -e "${YELLOW}Attempt $ATTEMPT/$MAX_ATTEMPTS:${NC}"
     echo -e "  $DOMAIN    → ${CYAN}$DNS_IP${NC}"
@@ -324,7 +324,7 @@ server {
     ssl_stapling on;
     ssl_stapling_verify on;
     ssl_trusted_certificate /etc/letsencrypt/live/uidcyber.com/chain.pem;
-    resolver 8.8.8.8 8.8.4.4 valid=300s;
+    resolver 192.0.2.53 192.0.2.54 valid=300s;
     resolver_timeout 5s;
 
     add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
